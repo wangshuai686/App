@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+	<title>个人中心</title>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+	<div id="box">
+
+	<div id="user-b">
+		<!--html5 nav-->
+		<nav class="j-nav navbar">
+	        <div class="logo fl" onclick="history.back()">
+					<a></a>
+			</div>
+			<span class="user-title">个人中心</span>
+			<div class="shopping-cart fr">
+				<span  @click="logout" style="width: 42px;height: 30px;padding: 8px 0px 0px 22px;display: block;font-size: 0.98rem;color: #fff;">退出</span>
+			</div>
+	    </nav>
+		<section class="m-component-user" id="m-user">
+	        <div class="m-user-avatar text-center">
+	            <span class="avatarPic"><img style="display: inline;" class="lazy img-circle" src="images/user-img0.jpg"></span>
+	            <div class="user_btn">
+	            	<b v-html="nc"></b><br />
+	            	<b v-html="zh"></b>
+	            </div>
+	        </div>
+	        
+	        <div class="head_list">
+	        	<ul class="m-user-list">
+	        		<li><span>￥0.00</span><br>账户余额</li>
+	        		<li><a href="coupon.html"><span class="bar"></span><span>{{yhj}}</span><br>优惠卷</a></li>
+	        		<li><a href="myorder.html"><span class="bar"></span><span>{{dd}}</span><br>我的订单</a></li>
+	        	</ul>
+	        </div>
+	        <ul class="m-user-content">
+	            <li>
+	                <div class="m-user-item">
+	                   <a href="invite.html" class="user-order">邀请好友得大礼包</a>
+	                </div>
+	                <div class="m-user-item">
+	                   <a href="groups.html" class="user-coupon">我的团单</a>
+	                </div>
+	            </li>
+	            <li>
+	            	<div class="m-user-item">
+	                   <a href="#" class="user-site">管理收货地址</a>
+	                </div>
+	                <div class="m-user-item">
+	                   <a href="#" class="user-set">设置</a>
+	                </div>
+	                <div class="m-user-item">
+	                   <div class="user-score"><span class="pull-right">400-110110</span>联系客服</div>
+	                </div>
+	            </li>
+	            
+	        </ul>
+	    </section>
+	    <!--footer begin-->
+		<footer class="footer">
+	        <nav>
+	            <ul>
+	                <li><a href="index.html" class="nav-controller"><div class="fb-home"></div>首页</a></li>
+	                <li><a href="groups.html" class="nav-controller"><div class="fb-group"></div>我的拼团</a></li>
+	                <li><a href="myorder.html" class="nav-controller"><div class="fb-list"></div>我的订单</a></li>
+	                <li><a href="javascript:void(0);" class="nav-controller active"><div class="fb-user"></div>个人中心</a></li>
+	            </ul>
+	        </nav>
+	    </footer>
+</div>
+	    <!--footer end-->
+	</div>
+	
+		<script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el:"#box",
+				data:{
+					nc:"<a class='this' href='login.html'>登录</a> <a href='register.html'>注册</a>",
+					zh:"",
+					yhj:0,
+					dd:0
+				},
+				created(){
+					if(localStorage.getItem("zh")){
+						this.zh = localStorage.getItem("zh");
+					}
+					if(localStorage.getItem("nc")){
+						this.nc = localStorage.getItem("nc");
+					}
+					if(localStorage.getItem("zh")){
+							this.yhj=4
+					}
+					if(localStorage.getItem("pay")){
+							this.dd=2
+					}
+				},
+				methods:{
+					logout(){
+						this.nc = "<a class='this' href='login.html'>登录</a> <a href='register.html'>注册</a>";
+						this.zh = "";
+						localStorage.removeItem("nc");
+						localStorage.removeItem("zh");
+						localStorage.removeItem("phone");
+						localStorage.removeItem("pay")
+						
+					}
+				}
+			})
+		</script>
+		
+</body>
+</html>

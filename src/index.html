@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+	<title>首页</title>
+		<link rel="stylesheet" href="css/frameui.css"/>
+    <link rel="stylesheet" href="css/widget/slider.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+	<div id="box" >
+	<!--html5 nav-->
+	<nav class="j-nav navbar index-nav">
+        <div class="logo fl">
+			<a href="javascript:void(0);"></a>
+		</div>
+		<div class="city">
+			<a id="showSiteBtn" href="#" target="_self">信阳</a>
+			<input id="switchGPS" name="switchGPS" type="hidden">
+		</div>
+    </nav>
+	<!--a1轮播图-->
+    <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}' >
+	    <ul class="am-slides cl">
+	        <li>
+	        	<img src="images/j-banner02.jpg">
+	        </li>
+	        <li>
+	        	<img src="images/j-banner04.jpg">
+	        </li>
+	    </ul>
+	  </div>
+	
+	<div class="j-hint">仅20元起送，24小时内极速达</div>
+	<!--导航-->
+	<div class="j-component-func" id="m-banner">
+        <ul class="list-unstyled" id="categoryMenu">
+            <li class="route1 "><a href="register.html"><span class="glyphicon fdayicon fdayicon-all"></span>新用户</a></li>
+            <li class="route2 "><a href="meal.html"><span class="glyphicon fdayicon fdayicon-order"></span>套餐</a></li>
+            <li class="route3 "><a href="invite.html"><span class="glyphicon fdayicon fdayicon-contact"></span>邀请红包</a></li>
+            <li class="route4 "><a href="#"><span class="glyphicon fdayicon fdayicon-client"></span>企业团购</a></li>
+        </ul>
+    </div>
+    <!--内容-->
+	<div class="j-component-bestsell">
+	    <ul class="list-unstyled" v-for = "ary in ary">
+            <li><a href="#"><img class="lazy" :src="ary.nr1"></a></li>
+        </ul>
+	</div>
+
+	<div id="tuan" class="tuan">
+        <div class="tuan_g" data-vtuan="0" data-cat="1" data-num="12058">
+            <i></i>
+            <a href="detail.html">
+                <div class="tuan_g_img" v-for = "ary in ary">
+                    <div class="tally_box">
+                        <p>{{ary.rs}}人团</p>
+                        <p>{{ary.zs}}折</p>
+                    </div>
+                    <img :src="ary.nr2">
+                </div>
+                <div class="tuan_g_info" v-for = "ary in ary">
+                    <p class="tuan_g_name">{{ary.bt}} </p>
+                    <p style="display: black;" class="tuan_g_cx">
+                        {{ary.ms}}
+                    </p>
+                </div>
+                
+                <div class="tuan_g_core" v-for = "ary in ary">
+                    <div id="triangle-right"></div>
+                    <div class="tuan_g_price">
+                        <span>{{ary.rs}}人团只需</span>
+                        <b>¥{{ary.jg}}</b>
+                    </div>
+                    <div class="tuan_g_btn">我要拼</div>
+                </div>
+                <div class="tuan_g_yj" v-for = "ary in ary"><s>原价:￥{{ary.yj}}</s></div>
+            </a>
+        </div>
+    </div>
+	<!--footer begin-->
+	<footer class="footer">
+        <nav>
+            <ul>
+                <li><a href="javascript:void(0);" class="nav-controller active"><div class="fb-home"></div>首页</a></li>
+                <li><a href="groups.html" class="nav-controller"><div class="fb-group"></div>我的拼团</a></li>
+                <li><a href="myorder.html" class="nav-controller"><div class="fb-list"></div>我的订单</a></li>
+                <li><a href="user.html" class="nav-controller"><div class="fb-user"></div>个人中心</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <!--footer end-->
+</div>
+	<!--引入js资源-->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/amazeui.js"></script>
+	<script src="js/handlebars.min.js"></script>
+	<script src="js/amazeui.widgets.helper.js"></script>
+	
+	<script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="axios/dist/axios.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+	var app = new Vue({
+			el:"#box",
+			data:{
+				ary:[]
+			},
+			created(){
+				axios.get("/index").then((res)=>{
+//					console.log(res.data);
+					this.ary = res.data;
+				})
+			}
+		})
+	
+	window.onload=function(){
+		$("#categoryMenu li").addClass("route")
+	}
+	</script> 	
+	
+
+	
+</body>
+</html>

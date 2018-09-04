@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+  
+	<title>注册</title>
+	<link rel="stylesheet" href="css/frameui.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+	<div id="register-b">
+		<!--html5 nav-->
+		<nav class="j-nav navbar">
+	        <div class="logo fl">
+				<a href="#"></a>
+			</div>
+			<span class="user-title">注册会员</span>
+	    </nav>
+
+		<div class="register-box">
+			<form action="" class="am-form" id="doc-vld-msg">
+				<fieldset>
+					
+						<div class="am-form-group">
+				      	<label for="doc-ipt-3" class="am-u-sm-2 j-form-label">
+					    	<span class="registericon registericon-user"></span>
+					  	</label>
+				      	<input type="text" v-model="obj.nc" id="doc-vld-name-2-1"  data-validation-message="请输入您的昵称" placeholder="昵称" required/>
+				    </div>
+				    
+				    <div class="am-form-group">
+				      	<label for="doc-ipt-3" class="am-u-sm-2 j-form-label">
+					    	<span class="registericon registericon-user"></span>
+					  	</label>
+				      	<input type="text" v-model="obj.zh" id="doc-vld-name-2-1" @blur="test()" data-validation-message="请输入您的账号" placeholder="账号" required/>
+				      	<span v-if="isShow" >
+									<font color="#087" v-if="isUse">可用</font>
+									<font color="#f33" v-else>不可用</font>
+								</span>
+				    </div>
+					
+				    
+				    
+				    <div class="am-form-group">
+				      	<label for="doc-vld-pwd-1" class="am-u-sm-2 j-form-label">
+			    	  		<span class="registericon registericon-password"></span>
+			    	  	</label>
+				      	<input type="password" v-model="obj.pwd" id="doc-vld-pwd-1" data-validation-message="请输入您的密码" placeholder="密码" required/>
+				    </div>
+				    
+				    <div class="am-form-group">
+				      	<label for="doc-vld-pwd-1" class="am-u-sm-2 j-form-label">
+			    	  		<span class="registericon registericon-password"></span>
+			    	  	</label>
+				      	<input type="password" v-model="pwds" id="doc-vld-pwd-1" data-validation-message="请再次确认密码" placeholder="确认密码" required/>
+				    </div>
+				    
+				    <div class="am-form-group">
+				      	<label for="doc-ipt-3" class="am-u-sm-2 j-form-label">
+					    	<span class="registericon registericon-user"></span>
+					  	</label>
+				      	<input type="number" v-model="obj.phone" id="doc-vld-name-2-1"  data-validation-message="请输入手机号码" placeholder="手机号码" required/>
+				    </div>
+				    <div class="am-form-group">
+				      	<label for="doc-vld-pwd-1" class="am-u-sm-2 j-form-label">
+			    	  		<span class="registericon registericon-password"></span>
+			    	  	</label>
+				      	<input type="text" id="doc-vld-pwd-1" style="float: left;width: 56%;" data-validation-message="请输入手机收到的短信验证码" placeholder="验证码" required/>
+				      	<span class="input-group-btn">
+		                    <button class="btn btn-default" type="button" id="TestGetCode"><span>点击获取</span><span class="hide">还剩<b id="timeout">60</b>秒</span></button>
+		                </span>
+				    </div>
+				    
+				    <button class="btn am-btn am-btn-secondary" type="submit" @click="reg()">注 册</button>
+				</fieldset>
+			</form>
+		</div>	
+	</div>
+	<!--引入js资源-->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/amazeui.js"></script>
+	<script src="js/handlebars.min.js"></script>
+	<script src="js/amazeui.widgets.helper.js"></script>
+	
+	<script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="axios/dist/axios.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script>
+		
+		var app = new Vue({
+			el:"#register-b",
+			data:{
+				obj:{
+					nc:"",
+					zh:"",
+					phone:"",
+					pwd:""
+				},
+				pwds:"",
+				isShow:false,
+				isUse:true
+				
+			},
+			methods:{
+				reg(){
+					
+					if(!this.isUse){
+							alert("账号被占用，请重新输入");
+							return;  //return可以起到结束函数执行的作用
+						}
+					
+					if(this.obj.pwd != this.pwds){
+							alert("两次密码输入不一致");
+							return; 
+						}
+					
+					axios.post("/reg",this.obj).then(function(res){
+							console.log(res)
+							if(res.data == true){
+								location = "login.html"
+							}
+						})
+					},
+					
+					test(){
+						axios.post("/test",this.obj.zh).then((res)=>{
+							console.log(res);
+							this.isShow = true;
+							this.isUse = res.data;
+						})
+					}
+					
+			}
+		})
+		
+		
+
+		$(function() {
+		  $('#doc-vld-msg').validator({
+		    onValid: function(validity) {
+		      $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+		    },
+
+		    onInValid: function(validity) {
+		      var $field = $(validity.field);
+		      var $group = $field.closest('.am-form-group');
+		      var $alert = $group.find('.am-alert');
+		      // 使用自定义的提示信息 或 插件内置的提示信息
+		      var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+		      if (!$alert.length) {
+		        $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+		          appendTo($group);
+		      }
+		      $alert.html(msg).show();
+		    }
+		  });
+		});
+	</script>
+</body>
+</html>

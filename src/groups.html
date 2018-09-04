@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+	<title>我的拼团</title>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+    <div id="user-b">
+        <!--html5 nav-->
+        <nav class="j-nav navbar">
+            <div class="logo fl" onclick="history.back()">
+            <a></a>
+            </div>
+            <span class="user-title">我的拼团</span>
+            <div class="shopping-cart fr">
+                <a href="index.html"></a>
+            </div>
+        </nav>
+        <div style="width: 100%;height: 200px;text-align: center;line-height: 100px;" v-show="local1">
+	    		<b>未登录</b>
+	    	</div>
+	    	<div style="width: 100%;height: 200px;text-align: center;line-height: 100px;" v-show="local3">
+	    		<b>你还没有拼团，快去拼团吧</b>	
+	    	</div>
+        <div class="groups-box" v-show="local2">
+            <!-- 我的拼团列表 -->
+            <div class="groups-m mc-sum-box">
+            		<div>
+                    <div class="myorder-sum fl"><img src="images/pay1.jpg"></div>
+                    <div class="myorder-text">
+                        <h1>越南进口白肉火龙果 </h1>
+                        <h2>规格：2个装</h2>
+                        <div class="tuan_g_core">
+                            <div class="tuan_g_price">
+                                <span>成团价</span>
+                                <b>¥14.00</b>
+                            </div>
+                            <div class="tuan_g_btn"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="groups-dowm-bnt">
+                  		  拼团进行中
+                    <a href="groupsdetails.html" class="btn fr">查看团详情</a>
+                    <a href="orderdetails.html" class="btn fr">查看订单详情</a>
+                </div>
+            	</div>
+
+        </div>
+        <!--footer begin-->
+        <footer class="footer">
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="nav-controller"><div class="fb-home"></div>首页</a></li>
+                    <li><a href="javascript:void(0);" class="nav-controller active"><div class="fb-group"></div>我的拼团</a></li>
+                    <li><a href="myorder.html" class="nav-controller"><div class="fb-list"></div>我的订单</a></li>
+                    <li><a href="user.html" class="nav-controller "><div class="fb-user"></div>个人中心</a></li>
+                </ul>
+            </nav>
+        </footer>
+        <!--footer end-->
+    </div>
+    <script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var app =new Vue({
+    		el:"#user-b",
+    		data:{
+    				local1:true,
+				local2:false,
+				local3:false
+				},
+    		created(){
+    			if(localStorage.getItem("zh")){
+						this.local1=false;
+							this.local2=false;
+							this.local3=true
+					}
+    			
+    			if(localStorage.getItem("pay")){
+						this.local1=false;
+							this.local2=true;
+							this.local3=false
+					}
+					
+    		}
+    	})
+    </script>
+</body>
+</html>
